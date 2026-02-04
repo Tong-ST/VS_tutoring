@@ -4,19 +4,17 @@ import yaml
 from rich.console import Console
 from rich.markdown import Markdown
 
-
 load_dotenv()
 
 gemini_model = [
+    "gemini-3-pro-preview",
     "gemini-3-flash-preview",
     "gemini-2.5-flash",
-    "gemini-3-pro-preview",
-    "gemini-2.5-pro",
+    "gemini-2.5-flash-lite"
 ]
 
-assignment_keys = {
-    "fuel": "assignments/fuel.yaml"
-}
+assignment_keys = {"fuel": "assignments/fuel.yaml"}
+
 
 def main():
     while True:
@@ -26,14 +24,16 @@ def main():
             break
         except (ValueError, KeyError):
             pass
-    
+
     ai_core = load_yaml("ai_core.yaml")
 
     question = input("Question?: ")
     current_code = input("Current_code?: ")
     output_error = input("Error?: ")
 
-    ai_answer = generate_answer(assignment, ai_core, current_code, output_error, question)
+    ai_answer = generate_answer(
+        assignment, ai_core, current_code, output_error, question
+    )
 
     console = Console()
     md = Markdown(ai_answer)
@@ -96,13 +96,7 @@ def build_prompt(assignment, ai_core, current_code, output_error, question):
     """
 
 
-def generate_answer(
-    assignment,
-    ai_core,
-    current_code,
-    output_error,
-    question
-):
+def generate_answer(assignment, ai_core, current_code, output_error, question):
     prompt = build_prompt(assignment, ai_core, current_code, output_error, question)
 
     answer = call_ai(prompt)
