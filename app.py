@@ -29,9 +29,9 @@ def main():
     
     ai_core = load_yaml("ai_core.yaml")
 
+    question = input("Question?: ")
     current_code = input("Current_code?: ")
     output_error = input("Error?: ")
-    question = input("Question?: ")
 
     ai_answer = generate_answer(assignment, ai_core, current_code, output_error, question)
 
@@ -48,7 +48,7 @@ def load_yaml(path):
 def call_ai(prompt: str) -> str:
     client = genai.Client()
 
-    response = client.models.generate_content(model=gemini_model[0], contents=prompt)
+    response = client.models.generate_content(model=gemini_model[1], contents=prompt)
     return response.text
 
 
@@ -79,7 +79,10 @@ def build_prompt(assignment, ai_core, current_code, output_error, question):
     {ai_core["requirements"]}
     _______________________________
 
-    Student prompt below:
+    Student prompt below (Focus on student question first):
+
+    Student Question (If empty just help them to get started):
+    {question}
 
     Current code (Can be empty):
     {current_code}
@@ -90,9 +93,6 @@ def build_prompt(assignment, ai_core, current_code, output_error, question):
 
     Output Error (Can be empty):
     {output_error}
-
-    Student Question (If empty just help them to get started):
-    {question}
     """
 
 
