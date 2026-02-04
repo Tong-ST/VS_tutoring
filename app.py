@@ -89,7 +89,7 @@ def build_prompt(assignment, ai_core, current_code, output_error, question):
     
     > Give completation signal
     if student complete assignment or acceptable answer, No need to perfection just for learning purposes.
-    > Also give lesson reviews after finished that make sure they understan the topic
+    > Also give short lesson reviews after finished that make sure student understand the topic.
 
     Output Error (Can be empty):
     {output_error}
